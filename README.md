@@ -38,6 +38,12 @@ A full-stack Book Review application with a FastAPI backend and a Next.js fronte
    - Swagger docs: `http://localhost:8000/docs`
    - ReDoc: `http://localhost:8000/redoc`
 
+6. **Run backend tests:**
+   ```bash
+   pytest test_main.py
+   ```
+   (Make sure you have pytest installed: `pip install pytest`)
+
 ---
 
 ## Frontend (Next.js)
