@@ -17,8 +17,7 @@ class Book(BookBase):
     id: int
     created_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = {'from_attributes': True}
 
 class BookWithReviews(Book):
     reviews: List['Review'] = []
@@ -36,8 +35,7 @@ class Review(ReviewBase):
     book_id: int
     created_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = {'from_attributes': True}
 
 # Update forward references
 BookWithReviews.model_rebuild()

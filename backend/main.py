@@ -81,7 +81,7 @@ def get_books(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     if cached_books is not None:
         return [schemas.Book(**book) for book in cached_books]
     books = crud.get_books(db, skip=skip, limit=limit)
-    serializable_books = [schemas.Book.from_orm(book).model_dump(mode="json") for book in books]
+    serializable_books = [schemas.Book.model_validate(book).model_dump(mode="json") for book in books]
     set_cache(cache_key, serializable_books, ex=60)
     return books
 
@@ -183,4 +183,4 @@ def create_review(book_id: int, review: schemas.ReviewCreate, db: Session = Depe
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

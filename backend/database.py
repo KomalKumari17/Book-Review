@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float, DateTime, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
-from datetime import datetime
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base
+from datetime import datetime, timezone
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./books.db"
 
@@ -22,7 +21,7 @@ class Book(Base):
     publication_date = Column(String)
     genre = Column(String)
     image_url = Column(String)  # URL for book cover image
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     reviews = relationship("Review", back_populates="book")
 
@@ -34,7 +33,7 @@ class Review(Base):
     reviewer_name = Column(String, nullable=False)
     rating = Column(Integer, nullable=False)  # 1-5 stars
     comment = Column(Text)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     book = relationship("Book", back_populates="reviews")
 
